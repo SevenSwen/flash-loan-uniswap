@@ -1,0 +1,9 @@
+.idea/
+node_modules
+build
+.coverage/
+.coverage-contracts/
+coverage/
+coverage.json
+Flattened.sol
+
