@@ -37,7 +37,6 @@ contract UniswapFlashSwapper is IUniswapV2Callee {
     // @dev Depending on your use case, you may want to add access controls to this function
     function _startSwap(address tokenIn, uint256 amount, address tokenOut) internal {
         _permissionedSender = msg.sender;
-        require(false, "000");
 //        if (tokenChanger == address(0)) {
             flashLoan(tokenIn, amount, tokenOut);
 //            return;
@@ -99,7 +98,6 @@ contract UniswapFlashSwapper is IUniswapV2Callee {
     // @notice This is the code that is executed after `flashLoan` initiated the flash-borrow
     // @dev When this code executes, this contract will hold the flash-borrowed amount of tokenIn
     function flashLoanExecute(uint256 amount0, uint256 amount1, bytes memory data) private {
-        require(false, "111");
         address pair = _permissionedPairAddress;
         uint256 _amountTokenIn;
         address[] memory _path = new address[](2);

@@ -56,6 +56,6 @@ contract('UniswapFlashSwapper', ([owner, alice]) => {
   });
 
   it('run flash loan', async () => {
-    // await this.arbitrageBot.startSwap(this.dai.address, ether('1'), this.wbtc.address);
+    await this.arbitrageBot.startSwap(this.dai.address, ether('1'), this.wbtc.address);
   });
 });
