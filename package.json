@@ -11,18 +11,24 @@
     "eslint": "eslint test/",
     "solium": "solium --dir contracts",
     "coverage": "truffle run coverage",
-    "build": "truffle build",
+    "build": "truffle compile",
     "test": "truffle test",
     "truffle": "truffle",
-    "flatten": "truffle-flattener $PROJECT_NAME.sol >> contracts/Flattened.sol"
+    "flatten": "truffle-flattener ArbitrageBot.sol >> contracts/Flattened.sol"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "SevenSwen",
+  "license": "MIT",
   "dependencies": {
-    "@openzeppelin/contracts": "^3.3.0"
+    "@openzeppelin/contracts": "^3.3.0",
+    "@truffle/hdwallet-provider": "^1.2.1",
+    "dotenv": "^8.2.0",
+    "uniswap-flash-swapper": "git+https://github.com/Austin-Williams/uniswap-flash-swapper.git"
   },
   "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.10",
+    "@sushiswap/core": "^1.4.1",
+    "@uniswap/v2-periphery": "git+https://github.com/Uniswap/uniswap-v2-periphery.git",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
@@ -37,13 +43,14 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "eth-gas-reporter": "^0.2.20",
     "ethereumjs-testrpc-sc": "^6.5.1-sc.1",
     "karma": "^6.0.1",
     "lodash": "^4.17.20",
-    "openzeppelin-test-helpers": "^0.5.1",
     "solidity-coverage": "^0.7.14",
     "truffle": "^5.1.63",
     "truffle-flattener": "^1.5.0",
+    "truffle-plugin-verify": "^0.5.4",
     "web3-utils": "^1.3.3"
   }
 }
