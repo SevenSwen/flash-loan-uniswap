@@ -12,7 +12,7 @@
     "solium": "solium --dir contracts",
     "coverage": "truffle run coverage",
     "build": "truffle compile",
-    "test": "truffle test",
+    "test": "bash scripts/test.sh",
     "truffle": "truffle",
     "flatten": "truffle-flattener ArbitrageBot.sol >> contracts/Flattened.sol"
   },
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@openzeppelin/test-helpers": "^0.5.10",
     "@sushiswap/core": "^1.4.1",
-    "@uniswap/v2-periphery": "git+https://github.com/Uniswap/uniswap-v2-periphery.git",
+    "@uniswap/v2-periphery": "^1.1.0-beta.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",

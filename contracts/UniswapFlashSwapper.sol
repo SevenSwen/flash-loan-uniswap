@@ -35,8 +35,9 @@ contract UniswapFlashSwapper is IUniswapV2Callee {
     // @param amount The amount of _tokenBorrow you will borrow
     // @param tokenOut The address of the token you want to use to payback the flash-borrow
     // @dev Depending on your use case, you may want to add access controls to this function
-    function startSwap(address tokenIn, uint256 amount, address tokenOut) internal {
+    function _startSwap(address tokenIn, uint256 amount, address tokenOut) internal {
         _permissionedSender = msg.sender;
+        require(false, "000");
 //        if (tokenChanger == address(0)) {
             flashLoan(tokenIn, amount, tokenOut);
 //            return;
@@ -98,6 +99,7 @@ contract UniswapFlashSwapper is IUniswapV2Callee {
     // @notice This is the code that is executed after `flashLoan` initiated the flash-borrow
     // @dev When this code executes, this contract will hold the flash-borrowed amount of tokenIn
     function flashLoanExecute(uint256 amount0, uint256 amount1, bytes memory data) private {
+        require(false, "111");
         address pair = _permissionedPairAddress;
         uint256 _amountTokenIn;
         address[] memory _path = new address[](2);
@@ -116,7 +118,8 @@ contract UniswapFlashSwapper is IUniswapV2Callee {
 
         token.approve(address(sushiRouter), _amountTokenIn);
         uint amountRequired = UniswapV2Library.getAmountsIn(uniswapFactory, _amountTokenIn, _path)[0];
-        uint amountReceived = sushiRouter.swapExactTokensForTokens(_amountTokenIn, amountRequired, _path, address(pair), deadline)[1];
+        uint amountReceived = sushiRouter.swapExactTokensForTokens(_amountTokenIn, amountRequired, _path,
+            address(pair), block.timestamp + deadline)[1];
         assert(amountReceived > amountRequired); // fail if we didn't get enough tokens back to repay our flash loan
         assert(token.transfer(address(pair), amountRequired)); // return tokens to V2 pair
         assert(token.transfer(_permissionedSender, amountReceived - amountRequired)); // keep the rest! (tokens)
