@@ -1,5 +1,5 @@
 {
-  "name": "arbitrage-bot",
+  "name": "flash-loan-uniswap",
   "version": "1.0.0",
   "description": "",
   "main": "truffle-config.js",
@@ -14,7 +14,7 @@
     "build": "truffle compile",
     "test": "bash scripts/test.sh",
     "truffle": "truffle",
-    "flatten": "truffle-flattener ArbitrageBot.sol >> contracts/Flattened.sol"
+    "flatten": "truffle-flattener contracts/ArbitrageBot.sol | awk '/SPDX-License-Identifier/&&c++>0 {next} 1' | awk '/pragma experimental ABIEncoderV2;/&&c++>0 {next} 1' > contracts/Flattened.sol"
   },
   "keywords": [],
   "author": "SevenSwen",
