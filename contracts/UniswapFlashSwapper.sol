@@ -6,6 +6,7 @@ import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
 import "@uniswap/v2-periphery/contracts/libraries/UniswapV2Library.sol";
 import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 import "@uniswap/v2-periphery/contracts/interfaces/IWETH.sol";
+import '@uniswap/lib/contracts/libraries/TransferHelper.sol';
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract UniswapFlashSwapper is IUniswapV2Callee {
@@ -100,26 +101,27 @@ contract UniswapFlashSwapper is IUniswapV2Callee {
     function flashLoanExecute(uint256 amount0, uint256 amount1, bytes memory data) private {
         address pair = _permissionedPairAddress;
         uint256 _amountTokenIn;
-        address[] memory _path = new address[](2);
-        IERC20 token;
+        address[] memory _pathOut = new address[](2);
+        address[] memory _pathIn = new address[](2);
         { // scope for token{0,1}, avoids stack too deep errors
             address token0 = IUniswapV2Pair(pair).token0();
             address token1 = IUniswapV2Pair(pair).token1();
-            token = IERC20(amount0 == 0 ? token1 : token0);
             assert(amount0 == 0 || amount1 == 0); // this strategy is unidirectional
-            _path[0] = amount0 == 0 ? token1 : token0;
-            _path[1] = amount0 == 0 ? token0 : token1;
+            _pathOut[0] = amount0 == 0 ? token1 : token0;
+            _pathOut[1] = amount0 == 0 ? token0 : token1;
+            _pathIn[0] = amount0 == 0 ? token0 : token1;
+            _pathIn[1] = amount0 == 0 ? token1 : token0;
             _amountTokenIn = amount0 == 0 ? amount1 : amount0;
         }
 
         assert(data.length == 0);
 
-        token.approve(address(sushiRouter), _amountTokenIn);
-        uint amountRequired = UniswapV2Library.getAmountsIn(uniswapFactory, _amountTokenIn, _path)[0];
-        uint amountReceived = sushiRouter.swapExactTokensForTokens(_amountTokenIn, amountRequired, _path,
-            address(pair), block.timestamp + deadline)[1];
+        TransferHelper.safeApprove(_pathOut[0], address(sushiRouter), _amountTokenIn);
+        uint amountRequired = UniswapV2Library.getAmountsIn(uniswapFactory, _amountTokenIn, _pathIn)[0];
+        uint amountReceived = sushiRouter.swapExactTokensForTokens(_amountTokenIn, 0, _pathOut,
+            address(this), block.timestamp + deadline)[1];
         assert(amountReceived > amountRequired); // fail if we didn't get enough tokens back to repay our flash loan
-        assert(token.transfer(address(pair), amountRequired)); // return tokens to V2 pair
-        assert(token.transfer(_permissionedSender, amountReceived - amountRequired)); // keep the rest! (tokens)
+        TransferHelper.safeTransfer(_pathOut[1], address(pair), amountRequired); // return tokens to V2 pair
+        TransferHelper.safeTransfer(_pathOut[1], _permissionedSender, amountReceived - amountRequired); // keep the rest! (tokens)
     }
 }
