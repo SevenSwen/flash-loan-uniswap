@@ -5,7 +5,7 @@ chai.use(require('chai-as-promised'));
 
 const { expect, assert } = chai;
 
-const WETH9 = artifacts.require('WETH9'); // Uniswap Protocol
+const WETH9 = artifacts.require('WETH9');
 const UniswapV2Factory = artifacts.require('UniswapV2Factory');
 // const UniswapV2Pair = artifacts.require('UniswapV2Pair');
 const UniswapV2Router02 = artifacts.require('UniswapV2Router02');

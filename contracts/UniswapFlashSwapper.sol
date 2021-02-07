@@ -31,11 +31,6 @@ contract UniswapFlashSwapper is IUniswapV2Callee {
     // but it's not possible because it requires a call to the v1 factory, which takes too much gas
     receive() external payable {}
 
-    // @notice Flash-borrows amount of tokenBorrow from a Uniswap V2 pair and repays using tokenPay
-    // @param tokenIn The address of the token you want to flash-borrow
-    // @param amount The amount of _tokenBorrow you will borrow
-    // @param tokenOut The address of the token you want to use to payback the flash-borrow
-    // @dev Depending on your use case, you may want to add access controls to this function
     function _startSwap(address tokenIn, uint256 amount, address tokenOut) internal {
         _permissionedSender = msg.sender;
 //        if (tokenChanger == address(0)) {
@@ -49,8 +44,6 @@ contract UniswapFlashSwapper is IUniswapV2Callee {
 //        traingularFlashSwap(tokenIn, amount, tokenOut);
     }
 
-    // @notice This function is used when the user repays with the same token they borrowed
-    // @dev This initiates the flash borrow. See `flashLoanExecute` for the code that executes after the borrow.
     function flashLoan(address tokenIn, uint256 amount, address tokenOut) private {
         _permissionedPairAddress = UniswapV2Library.pairFor(uniswapFactory, tokenIn, tokenOut);
         address pairAddress = _permissionedPairAddress; // gas efficiency
@@ -96,8 +89,6 @@ contract UniswapFlashSwapper is IUniswapV2Callee {
 //        traingularFlashSwapExecute(_tokenBorrow, _amount, _tokenPay, _triangleData);
     }
 
-    // @notice This is the code that is executed after `flashLoan` initiated the flash-borrow
-    // @dev When this code executes, this contract will hold the flash-borrowed amount of tokenIn
     function flashLoanExecute(uint256 amount0, uint256 amount1, bytes memory data) private {
         address pair = _permissionedPairAddress;
         uint256 _amountTokenIn;
