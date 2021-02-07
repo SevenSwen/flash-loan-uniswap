@@ -51,8 +51,8 @@ contract('UniswapFlashSwapper', ([owner, alice]) => {
       (await time.latest()).add(time.duration.minutes('10')),
     );
 
-    this.arbitrageBot = await ArbitrageBot.new(uniswapFactory.address,
-      this.uniswapRouter.address, this.sushiswapRouter.address);
+    this.arbitrageBot = await ArbitrageBot.new(this.uniswapRouter.address,
+      this.sushiswapRouter.address);
   });
 
   it('run flash loan', async () => {

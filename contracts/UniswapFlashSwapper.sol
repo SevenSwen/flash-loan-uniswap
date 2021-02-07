@@ -21,9 +21,9 @@ contract UniswapFlashSwapper is IUniswapV2Callee {
     address private _permissionedPairAddress = address(0);
     address private _permissionedSender = address(0);
 
-    constructor(address _uniswapFactory, address router, address _sushiRouter) public {
-        uniswapFactory = _uniswapFactory; // 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f
-        WETH = IWETH(IUniswapV2Router02(router).WETH());
+    constructor(address _uniswapRouter, address _sushiRouter) public {
+        uniswapFactory = IUniswapV2Router02(_uniswapRouter).factory(); // 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f
+        WETH = IWETH(IUniswapV2Router02(_uniswapRouter).WETH());
         sushiRouter = IUniswapV2Router02(_sushiRouter);
     }
 
@@ -120,7 +120,7 @@ contract UniswapFlashSwapper is IUniswapV2Callee {
         uint amountRequired = UniswapV2Library.getAmountsIn(uniswapFactory, _amountTokenIn, _pathIn)[0];
         uint amountReceived = sushiRouter.swapExactTokensForTokens(_amountTokenIn, 0, _pathOut,
             address(this), block.timestamp + deadline)[1];
-        assert(amountReceived > amountRequired); // fail if we didn't get enough tokens back to repay our flash loan
+        require(amountReceived > amountRequired, "profit < 0"); // fail if we didn't get enough tokens back to repay our flash loan
         TransferHelper.safeTransfer(_pathOut[1], address(pair), amountRequired); // return tokens to V2 pair
         TransferHelper.safeTransfer(_pathOut[1], _permissionedSender, amountReceived - amountRequired); // keep the rest! (tokens)
     }
