@@ -1,9 +1,9 @@
-const { expectRevert, ether, BN, time } = require('@openzeppelin/test-helpers');
+const { ether, time } = require('@openzeppelin/test-helpers');
 
 const chai = require('chai');
 chai.use(require('chai-as-promised'));
 
-const { expect, assert } = chai;
+const { expect } = chai;
 
 const WETH9 = artifacts.require('WETH9');
 const UniswapV2Factory = artifacts.require('UniswapV2Factory');

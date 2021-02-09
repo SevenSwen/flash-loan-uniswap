@@ -2,7 +2,7 @@
   "name": "flash-loan-uniswap",
   "version": "1.0.0",
   "description": "",
-  "main": "truffle-config.js",
+  "main": "truffle-config-template.js",
   "directories": {
     "test": "test"
   },
@@ -10,11 +10,12 @@
     "lint": "npm run eslint && npm run solium",
     "eslint": "eslint test/",
     "solium": "solium --dir contracts",
-    "coverage": "truffle run coverage",
-    "build": "truffle compile",
-    "test": "bash scripts/test.sh",
-    "truffle": "truffle",
-    "flatten": "truffle-flattener contracts/ArbitrageBot.sol | awk '/SPDX-License-Identifier/&&c++>0 {next} 1' | awk '/pragma experimental ABIEncoderV2;/&&c++>0 {next} 1' > contracts/Flattened.sol"
+    "coverage": "bash ./scripts/coverage.sh",
+    "build": "bash ./scripts/build.sh",
+    "test": "bash ./scripts/test.sh",
+    "deploy": "bash ./scripts/deploy.sh",
+    "flatten": "bash ./scripts/flatten.sh",
+    "verify": "bash ./scripts/verify.sh"
   },
   "keywords": [],
   "author": "SevenSwen",
