@@ -3,7 +3,7 @@ Flash-loan uniswap contract
 
 **Requirements** 
 
- - nodeJS v10.19.0 or later
+- nodeJS v10.19.0 or later
 - npm 6.14.10 or later
 - Truffle v5.1.55 (core: 5.1.55) or later
 

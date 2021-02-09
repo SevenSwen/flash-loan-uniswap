@@ -42,9 +42,9 @@ module.exports = {
       from: process.env.DEPLOYER_ACCOUNT, // contracts owner address
       websockets: true,
     },
-    kovan: {
-      provider: () => new HDWalletProvider(mnemonic, `https://kovan.infura.io/v3/${process.env.INFURA_ID}`),
-      network_id: 42, // kovan's id
+    ropsten: {
+      provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/${process.env.INFURA_ID}`),
+      network_id: 3, // ropsten's id
       from: process.env.DEPLOYER_ACCOUNT, // contracts owner address
       websockets: true,
     },
