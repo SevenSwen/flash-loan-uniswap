@@ -128,7 +128,7 @@ contract('UniswapFlashSwapper', ([owner, alice]) => {
     await this.uniswapRouter.addLiquidity(
       this.usdc.address,
       this.wbtc.address,
-      usd('250000'), // 1 WBTC = 25000 USDT
+      usd('250000'), // 1 WBTC = 25000 USDC
       btc('10'),
       0,
       0,
@@ -141,7 +141,7 @@ contract('UniswapFlashSwapper', ([owner, alice]) => {
     await this.sushiswapRouter.addLiquidity(
       this.usdc.address,
       this.wbtc.address,
-      usd('350000'), // 1 WBTC = 35,000 USDT
+      usd('350000'), // 1 WBTC = 35,000 USDC
       btc('10'),
       0,
       0,
