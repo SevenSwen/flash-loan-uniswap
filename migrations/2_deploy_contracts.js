@@ -16,13 +16,13 @@ const ether = (n) => web3.utils.toWei(n, 'ether');
 
 module.exports = function (deployer, network) {
   deployer.then(async () => {
-    if (network === 'ropsten' || network === 'ropsten-fork') {
+    if (network === 'rinkeby' || network === 'rinkeby-fork') {
       const owner = process.env.DEPLOYER_ACCOUNT;
       // connect to uniswap protocol
       const uniswapRouter = await UniswapV2Router02.at('0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D');
       const weth = await WETH9.at('0xc778417E063141139Fce010982780140Aa0cD5Ab');
 
-      // fack the sushiswap protocol
+      // fuck the sushiswap protocol
       // deploy sushiswap factory and router
       const sushiswapFactory = await deployer.deploy(UniswapV2Factory, owner);
       const sushiswapRouter = await deployer.deploy(UniswapV2Router02,
@@ -50,7 +50,7 @@ module.exports = function (deployer, network) {
 
       await dai.approve(uniswapRouter.address, ether('250000'));
       await wbtc.approve(uniswapRouter.address, btc('10'));
-      let now = new Date() / 1000;
+      let now = new Date() / 1000 | 0;
       await uniswapRouter.addLiquidity(
         dai.address,
         wbtc.address,
@@ -59,12 +59,13 @@ module.exports = function (deployer, network) {
         0,
         0,
         owner,
-        now + 600,
+        now + 6000,
       );
+      console.log('dai - wbtc uniswap has been deployed');
 
       await dai.approve(sushiswapRouter.address, ether('350000'));
       await wbtc.approve(sushiswapRouter.address, btc('10'));
-      now = new Date() / 1000;
+      now = new Date() / 1000 | 0;
       await sushiswapRouter.addLiquidity(
         dai.address,
         wbtc.address,
@@ -73,12 +74,13 @@ module.exports = function (deployer, network) {
         0,
         0,
         owner,
-        now + 600,
+        now + 6000,
       );
+      console.log('dai - wbtc sushiswap has been deployed');
 
       await usdt.approve(uniswapRouter.address, usd('250000'));
       await wbtc.approve(uniswapRouter.address, btc('10'));
-      now = new Date() / 1000;
+      now = new Date() / 1000 | 0;
       await uniswapRouter.addLiquidity(
         usdt.address,
         wbtc.address,
@@ -87,12 +89,13 @@ module.exports = function (deployer, network) {
         0,
         0,
         owner,
-        now + 600,
+        now + 6000,
       );
+      console.log('usdt - wbtc uniswap has been deployed');
 
       await usdt.approve(sushiswapRouter.address, usd('350000'));
       await wbtc.approve(sushiswapRouter.address, btc('10'));
-      now = new Date() / 1000;
+      now = new Date() / 1000 | 0;
       await sushiswapRouter.addLiquidity(
         usdt.address,
         wbtc.address,
@@ -101,12 +104,13 @@ module.exports = function (deployer, network) {
         0,
         0,
         owner,
-        now + 600,
+        now + 6000,
       );
+      console.log('usdt - wbtc sushiswap has been deployed');
 
       await usdc.approve(uniswapRouter.address, usd('250000'));
       await wbtc.approve(uniswapRouter.address, btc('10'));
-      now = new Date() / 1000;
+      now = new Date() / 1000 | 0;
       await uniswapRouter.addLiquidity(
         usdc.address,
         wbtc.address,
@@ -115,12 +119,13 @@ module.exports = function (deployer, network) {
         0,
         0,
         owner,
-        now + 600,
+        now + 6000,
       );
+      console.log('usdc - wbtc uniswap has been deployed');
 
       await usdc.approve(sushiswapRouter.address, usd('350000'));
       await wbtc.approve(sushiswapRouter.address, btc('10'));
-      now = new Date() / 1000;
+      now = new Date() / 1000 | 0;
       await sushiswapRouter.addLiquidity(
         usdc.address,
         wbtc.address,
@@ -129,8 +134,9 @@ module.exports = function (deployer, network) {
         0,
         0,
         owner,
-        now + 600,
+        now + 6000,
       );
+      console.log('usdc - wbtc sushiswap has been deployed');
     } else {
       console.error(`Unsupported network: ${network}`);
     }
