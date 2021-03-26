@@ -18,6 +18,14 @@ truffle compile
 generate_truffle_config "0.4.24" ".\/third-party-contracts\/WBTC"
 truffle compile
 
+# build Tend
+generate_truffle_config "0.6.3" ".\/third-party-contracts\/Tend"
+truffle compile
+
+# build LiquidityPool
+generate_truffle_config "0.5.12" ".\/third-party-contracts\/LiquidityPool"
+truffle compile
+
 # copy uniswap artifacts
 cp ./node_modules/@uniswap/v2-core/build/UniswapV2Pair.json ./build/contracts
 cp ./node_modules/@uniswap/v2-core/build/UniswapV2Factory.json ./build/contracts

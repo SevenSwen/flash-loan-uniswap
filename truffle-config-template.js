@@ -48,7 +48,11 @@ module.exports = {
       from: process.env.DEPLOYER_ACCOUNT, // contracts owner address
       websockets: true,
     },
-
+    development: {
+      host: '127.0.0.1',
+      port: 8545,
+      network_id: '*',
+    },
   },
 
   // Set default mocha options here, use special reporters etc.
