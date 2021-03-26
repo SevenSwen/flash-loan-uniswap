@@ -111,6 +111,10 @@ contract('TendSwapper', ([owner, alice, bob]) => {
     console.log('sub:', web3.utils.fromWei(aliceETHBalance.sub(aliceETHBalance2), 'ether').toString());
     const botETHBalance2 = new BN(await web3.eth.getBalance(this.bot.address));
     console.log('botETHBalance after swap:', web3.utils.fromWei(botETHBalance2, 'ether').toString());
+
+    await this.bot.getProfit();
+    const aliceETHBalance3 = new BN(await web3.eth.getBalance(alice));
+    console.log('aliceETHBalance after swap:', web3.utils.fromWei(aliceETHBalance3, 'ether').toString());
   });
 
   it('test swap with Tend tokens 8500 12h', async () => {

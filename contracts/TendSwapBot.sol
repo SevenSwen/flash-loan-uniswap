@@ -57,6 +57,15 @@ contract TendSwapBot is Ownable {
         );
     }
 
+    function getProfit() external {
+        address payable to = payable(owner());
+        to.transfer(address(this).balance);
+    }
+
+    function BIG_RED_BUTTON() external onlyOwner {
+        selfdestruct(payable(owner()));
+    }
+
     function __callback(uint256 _amount) external onlyBorrowProxy payable {
         address[] memory _pathEthTend = new address[](2);
         address[] memory _pathTendEth = new address[](2);
